@@ -1,14 +1,12 @@
 import React from 'react';
-import myLogo from '../assets/logo.png'; // مسار الشعار الخاص بك
-import { GoogleLogin } from '@react-oauth/google'; // استدعاء زر جوجل الرسمي
+import myLogo from '../assets/logo.png'; 
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function AuthScreen({ onLoginSuccess }) {
-  
-  // دالة تُستدعى بعد ما المستخدم يختار حسابه بنجاح من نافذة جوجل
+ 
   const handleSuccess = (credentialResponse) => {
     console.log("تم استلام التوكن من جوجل بنجاح، جاري إرساله للسيرفر...");
 
-    // إرسال التوكن إلى سيرفر الباك إند (بورت 5000) للتحقق والحفظ في الـ JSON
     fetch('http://161.35.25.67:5000/api/auth/google', {
       method: 'POST',
       headers: { 
@@ -24,8 +22,12 @@ export default function AuthScreen({ onLoginSuccess }) {
     })
     .then(data => {
       if (data.success) {
-        console.log("بشارة! السيرفر تحقق وحفظ البيانات بالجيسون بنجاح:", data.user);
-        onLoginSuccess(); // توجيه المستخدم إلى لوحة تحكم البوت (Dashboard)
+        console.log("بشارة! السيرفر تحقق وحفظ البيانات بنجاح:", data.user);
+        
+        // 🔴 هذا هو السطر المهم الذي كان ينقصنا (حفظ الإيميل):
+        localStorage.setItem('userEmail', data.user.payload.email);
+        
+        onLoginSuccess(); // توجيه المستخدم للوحة التحكم
       } else {
         alert("السيرفر رفض التوكن: " + data.message);
       }
@@ -36,7 +38,6 @@ export default function AuthScreen({ onLoginSuccess }) {
     });
   };
 
-  // دالة تُستدعى في حال حدوث خطأ من طرف جوجل نفسه أثناء الدخول
   const handleError = () => {
     console.log("❌ فشل تسجيل الدخول من قوقل");
     alert("حدث خطأ أثناء الاتصال بجوجل، يرجى المحاولة مجدداً");
@@ -44,17 +45,12 @@ export default function AuthScreen({ onLoginSuccess }) {
 
   return (
     <div style={styles.container}>
-
-      {/* الشعار المتسنتر فوق النافذة */}
       <img src={myLogo} alt="Logo" style={styles.topLogo} />
-
-      {/* النافذة الزجاجية الأنيقة */}
       <div style={styles.glassBox}>
         <form style={styles.form} onSubmit={(e) => e.preventDefault()}>
           <h2 style={styles.title}>تسجيل الدخول للنظام</h2>
           <p style={styles.subtitle}>يرجى الضغط على الزر أدناه للدخول السريع والآمن عبر حسابك</p>
           
-          {/* حاوية زر جوجل بالمنتصف */}
           <div style={styles.googleBtnContainer}>
             <GoogleLogin
               onSuccess={handleSuccess}
@@ -62,7 +58,7 @@ export default function AuthScreen({ onLoginSuccess }) {
               theme="filled_blue"
               size="large"
               shape="pill"
-              locale="ar" // لغة نص الزر بالكامل عربية
+              locale="ar"
             />
           </div>
         </form>
@@ -71,7 +67,6 @@ export default function AuthScreen({ onLoginSuccess }) {
   );
 }
 
-// 🎨 التنسيقات والستقايل الزجاجي المتناسق
 const styles = {
   container: {
     position: 'fixed',
@@ -79,7 +74,7 @@ const styles = {
     left: 0,
     width: '100vw',
     height: '100vh',
-    backgroundColor: '#F3DFC3', // لون الخلفية المعتمد لديك
+    backgroundColor: '#F3DFC3',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
