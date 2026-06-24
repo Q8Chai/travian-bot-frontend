@@ -157,7 +157,10 @@ function App() {
 
     fetch('http://161.35.25.67:5000/api/config', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+          'Content-Type': 'application/json',
+          'user-email': localStorage.getItem('userEmail')
+      },
       body: JSON.stringify(updatedConfig)
     })
     .then(res => res.json())
