@@ -181,7 +181,10 @@ function App() {
     // 🎯 تم تعديل هذا الرابط ليطالع الباك إند السحابي
     fetch('http://161.35.25.67:5000/api/bot/link-account', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+          'Content-Type': 'application/json',
+          'user-email': localStorage.getItem('userEmail') // هذا السطر اللي سوينا له إضافة
+      },
       body: JSON.stringify(payload)
     })
     .then(res => res.json())
