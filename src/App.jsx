@@ -68,7 +68,9 @@ function App() {
 
   // دالة جلب البيانات من السيرفر السحابي
   const fetchConfigFromServer = () => {
-    fetch('http://161.35.25.67:5000/api/config')
+    fetch('http://161.35.25.67:5000/api/config', {
+  headers: { 'user-email': localStorage.getItem('userEmail') }
+})
       .then(res => res.json())
       .then(data => {
         const forcedCleanData = { ...data };
