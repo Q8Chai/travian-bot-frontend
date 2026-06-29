@@ -91,7 +91,19 @@ function App() {
 
         setConfig(forcedCleanData);
       })
-      .catch(err => console.error("Error connected to server:", err));
+      .catch(err => {
+        console.error("Error connected to server:", err);
+        setConfig({
+          resources: { wood: "0", clay: "0", iron: "0", crop: "0" },
+          status: {},
+          queues: { dorf1: [], dorf2: [] },
+          botStates: { dorf1: 'stopped', dorf2: 'stopped' },
+          pointers: { dorf1: 0, dorf2: 0 },
+          targets: {},
+          currentLevels: {},
+          auth: { gameAccounts: [] }
+        });
+      });
   };
 
   useEffect(() => {
