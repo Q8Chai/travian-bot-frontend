@@ -68,7 +68,7 @@ function App() {
 
   // دالة جلب البيانات من السيرفر السحابي
   const fetchConfigFromServer = () => {
-    fetch('http://161.35.25.67:5000/api/config', {
+    fetch('https://travianaco.com/api/config/api/config', {
   headers: { 'user-email': localStorage.getItem('userEmail') }
 })
       .then(res => res.json())
