@@ -167,7 +167,7 @@ function App() {
     updatedConfig.botStates[type] = updatedConfig.botStates[type] === 'running' ? 'stopped' : 'running';
     setSaveStatus(`🔄 Updating ${type === 'dorf1' ? 'Fields' : 'Buildings'} Engine...`);
 
-    fetch('http://161.35.25.67:5000/api/config', {
+    fetch('https://travianaco.com/api/auth/google/api/config', {
       method: 'POST',
       headers: { 
           'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ function App() {
     setSaveStatus('🔗 Connecting and pulling live resources... (Wait 8s)');
 
     // 🎯 تم تعديل هذا الرابط ليطالع الباك إند السحابي
-    fetch('http://161.35.25.67:5000/api/bot/link-account', {
+    fetch('https://travianaco.com/api/auth/google/api/bot/link-account', {
       method: 'POST',
       headers: { 
           'Content-Type': 'application/json',
