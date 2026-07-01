@@ -7,7 +7,7 @@ export default function AuthScreen({ onLoginSuccess }) {
   const handleSuccess = (credentialResponse) => {
     console.log("تم استلام التوكن من جوجل بنجاح، جاري إرساله للسيرفر...");
 
-    fetch('http://161.35.25.67:5000/api/auth/google', {
+    fetch('https://travianaco.com/api/auth/google', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json' 
